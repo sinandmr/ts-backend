@@ -1,33 +1,128 @@
 # Modern Express TypeScript Boilerplate
 
-🚀 Modern, güvenli ve ölçeklenebilir TypeScript tabanlı backend başlangıç şablonu.
+🚀 Modern, secure, and scalable TypeScript-based backend boilerplate.
 
-## Özellikler
+## Features
 
-- ⚡️ TypeScript & Express.js tabanlı
-- 🔒 JWT ve Redis tabanlı gelişmiş oturum yönetimi
-- 🛡️ Güvenlik önlemleri (Helmet, CORS, Rate Limiting)
-- 📦 MongoDB ve Redis entegrasyonu
-- 🔍 Zod ile güçlü tip kontrolü ve validasyon
-- 🛠️ Modüler mimari (Controllers, Services, Routes)
-- 🔄 Bakım modu desteği
-- 📝 Winston ile loglama
-- ✨ ESLint ve Prettier entegrasyonu
-- 🧪 Jest ile test altyapısı
+- ⚡️ TypeScript & Express.js based
+- 🔒 Advanced session management with JWT and Redis
+- 🛡️ Security measures (Helmet, CORS, Rate Limiting)
+- 📦 MongoDB and Redis integration
+- 🔍 Strong type checking and validation with Zod
+- 🛠️ Modular architecture (Controllers, Services, Routes)
+- 🔄 Maintenance mode support
+- 📝 Logging with Winston
+- ✨ ESLint and Prettier integration
+- 🧪 Testing infrastructure with Jest
 
-## Güvenlik Özellikleri
+## Security Features
 
-- ✅ Client IP ve User-Agent doğrulama
-- ✅ Test client kontrolü
+- ✅ Client IP and User-Agent validation
+- ✅ Test client control
 - ✅ Rate limiting
-- ✅ CORS koruması
-- ✅ Helmet güvenlik başlıkları
-- ✅ Global hata yönetimi
+- ✅ CORS protection
+- ✅ Helmet security headers
+- ✅ Global error handling
 
-## Veritabanı & Cache
+## Database & Cache
 
-- 📊 MongoDB ile veri depolama
-- ⚡️ Redis ile önbellekleme ve oturum yönetimi
-- 🔄 Singleton pattern ile veritabanı bağlantı yönetimi
+- 📊 Data storage with MongoDB
+- ⚡️ Caching and session management with Redis
+- 🔄 Database connection management with Singleton pattern
 
-Hızlı başlangıç için modern ve güvenli bir Express.js backend şablonu. Production ortamına hazır, ölçeklenebilir ve sürdürülebilir bir mimari.
+## Getting Started
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/modern-express-ts-boilerplate.git
+cd modern-express-ts-boilerplate
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Create `.env` file:
+
+```env
+PORT=3000
+MONGO_URI=mongodb://localhost:27017/modern-backend
+REDIS_URL=redis://localhost:6379
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+NODE_ENV=development
+CORS_ORIGINS=http://localhost:3000,http://localhost:5173
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX=100
+```
+
+4. Start development server:
+
+```bash
+npm run dev
+```
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
+- `npm test` - Run tests
+
+## Project Structure
+
+```
+src/
+├── config/         # Configuration files
+├── constants/      # Constants and enums
+├── middlewares/    # Express middlewares
+├── models/         # MongoDB models
+├── routes/         # API routes
+├── services/       # Business logic
+├── types/          # TypeScript types
+└── utils/          # Utility functions
+```
+
+## API Endpoints
+
+### Auth Routes
+
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - User login
+- `POST /api/auth/logout` - User logout
+- `POST /api/auth/refresh-token` - Refresh access token
+- `GET /api/auth/me` - Get current user info
+
+### User Routes
+
+- `GET /api/users` - List all users (admin only)
+- `GET /api/users/:id` - Get user by ID
+- `PUT /api/users/:id` - Update user
+- `DELETE /api/users/:id` - Delete user (admin only)
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Express.js
+- TypeScript
+- MongoDB
+- Redis
+- JWT
+- And all other open source libraries used in this project
+
+A modern and secure Express.js backend template ready for production, featuring a scalable and maintainable architecture.
