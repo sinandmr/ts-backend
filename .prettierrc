@@ -1,0 +1,19 @@
+{
+  "semi": true,
+  "trailingComma": "all",
+  "singleQuote": true,
+  "printWidth": 100,
+  "tabWidth": 2,
+  "importOrder": [
+    "^reflect-metadata$",
+    "^dotenv$",
+    "^express$",
+    "^@/types$",
+    "^@/services/(.*)$",
+    "^@@/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderCaseInsensitive": true
+}

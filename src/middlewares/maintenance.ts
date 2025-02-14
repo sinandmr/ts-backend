@@ -9,7 +9,7 @@ export const checkMaintenance = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    // Redis'ten bakım modu durumunu kontrol et
+    // Check maintenance mode status from Redis
     const maintenance = await global.redisService.get('settings:maintenance');
 
     if (maintenance === 'true') {
@@ -17,7 +17,7 @@ export const checkMaintenance = async (
         success: false,
         error: {
           code: ERROR_CODES.MAINTENANCE,
-          message: 'Sistem bakımda. Lütfen daha sonra tekrar deneyin.',
+          message: 'System is under maintenance. Please try again later.',
           timestamp: new Date().toISOString()
         }
       });
@@ -26,13 +26,13 @@ export const checkMaintenance = async (
 
     next();
   } catch (error) {
-    // Bakım modu kontrolünde hata olursa, güvenli tarafta kal ve erişimi engelle
-    console.error('Bakım modu kontrolünde hata:', error);
+    // If maintenance check fails, stay on the safe side and block access
+    console.error('Error checking maintenance mode:', error);
     res.status(StatusCodes.SERVICE_UNAVAILABLE).json({
       success: false,
       error: {
         code: ERROR_CODES.MAINTENANCE,
-        message: 'Sistem durumu kontrol edilemiyor. Lütfen daha sonra tekrar deneyin.',
+        message: 'Unable to check system status. Please try again later.',
         timestamp: new Date().toISOString()
       }
     });

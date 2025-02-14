@@ -21,31 +21,31 @@ export const authenticate = async (
   next: NextFunction
 ) => {
   try {
-    // Token kontrolü
+    // Token check
     const authHeader = req.headers.authorization;
     if (!authHeader?.startsWith('Bearer ')) {
-      throw new AppError(401, 'Yetkilendirme başlığı geçersiz', ERROR_CODES.UNAUTHORIZED);
+      throw new AppError(401, 'Invalid authorization header', ERROR_CODES.UNAUTHORIZED);
     }
 
     const token = authHeader.split(' ')[1];
     if (!token) {
-      throw new AppError(401, 'Token bulunamadı', ERROR_CODES.UNAUTHORIZED);
+      throw new AppError(401, 'Token not found', ERROR_CODES.UNAUTHORIZED);
     }
 
-    // JWT doğrulama
+    // JWT verification
     const decoded = jwt.verify(token, config.jwtSecret) as JWTPayload;
 
-    // Redis'ten session kontrolü
+    // Session check from Redis
     const sessionKey = `session:${decoded.id}`;
     const sessionData = await global.redisService.get(sessionKey);
 
     if (!sessionData) {
-      throw new AppError(401, 'Oturum süresi dolmuş veya geçersiz', ERROR_CODES.SESSION_EXPIRED);
+      throw new AppError(401, 'Session expired or invalid', ERROR_CODES.SESSION_EXPIRED);
     }
 
     const session = JSON.parse(sessionData);
 
-    // Client bilgilerini kontrol et
+    // Check client information
     if (session.clientInfo && process.env.NODE_ENV === 'production') {
       const currentUserAgent = req.headers['user-agent'] ?? '';
       const currentClientIp =
@@ -57,33 +57,33 @@ export const authenticate = async (
         currentUserAgent.toLowerCase().includes('postman') ||
         !currentUserAgent;
 
-      // Test client kontrolü
+      // Test client check
       if (isTestClient) {
         throw new AppError(
           403,
-          'Test istemcilerine izin verilmiyor',
+          'Test clients are not allowed',
           ERROR_CODES.TEST_CLIENT_NOT_ALLOWED
         );
       }
 
-      // User-Agent ve IP kontrolü
+      // User-Agent and IP check
       if (
         session.clientInfo.userAgent !== currentUserAgent ||
         session.clientInfo.ip !== currentClientIp
       ) {
         throw new AppError(
           401,
-          'Oturum bilgileri eşleşmiyor',
+          'Session information mismatch',
           ERROR_CODES.CLIENT_INFO_MISMATCH
         );
       }
     }
 
-    // Session'ı yenile
+    // Refresh session
     await global.redisService.set(
       sessionKey,
       JSON.stringify(session),
-      60 * 60 // 1 saat
+      60 * 60 // 1 hour
     );
 
     req.user = {
@@ -94,7 +94,7 @@ export const authenticate = async (
     next();
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {
-      next(new AppError(401, 'Geçersiz veya süresi dolmuş token', ERROR_CODES.UNAUTHORIZED));
+      next(new AppError(401, 'Invalid or expired token', ERROR_CODES.UNAUTHORIZED));
     } else {
       next(error);
     }
@@ -104,12 +104,12 @@ export const authenticate = async (
 export const authorize = (...roles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {
-      return next(new AppError(401, 'Yetkilendirme gerekli', ERROR_CODES.UNAUTHORIZED));
+      return next(new AppError(401, 'Authorization required', ERROR_CODES.UNAUTHORIZED));
     }
 
     if (!roles.includes(req.user.role)) {
       return next(
-        new AppError(403, 'Bu işlemi gerçekleştirmek için yetkiniz yok', ERROR_CODES.FORBIDDEN)
+        new AppError(403, 'You do not have permission to perform this action', ERROR_CODES.FORBIDDEN)
       );
     }
 

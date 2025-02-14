@@ -20,9 +20,9 @@ export class RedisService {
   public async connect(): Promise<void> {
     try {
       await this.client.ping();
-      console.log('✅ Redis bağlantısı başarılı');
+      console.log('✅ Redis connection successful');
     } catch (error) {
-      console.error('❌ Redis bağlantı hatası:', error);
+      console.error('❌ Redis connection error:', error);
       throw error;
     }
   }
@@ -30,9 +30,9 @@ export class RedisService {
   public async disconnect(): Promise<void> {
     try {
       await this.client.quit();
-      console.log('Redis bağlantısı kapatıldı');
+      console.log('Redis connection closed');
     } catch (error) {
-      console.error('Redis bağlantısı kapatılırken hata oluştu:', error);
+      console.error('Error closing Redis connection:', error);
       throw error;
     }
   }
@@ -41,7 +41,7 @@ export class RedisService {
     return this.client;
   }
 
-  // Cache işlemleri için yardımcı metodlar
+  // Helper methods for cache operations
   public async set(key: string, value: string, expireSeconds?: number): Promise<void> {
     if (expireSeconds) {
       await this.client.setex(key, expireSeconds, value);

@@ -1,5 +1,4 @@
-import cors from 'cors';
-import express from 'express';
+import cors from 'express';
 import helmet from 'helmet';
 
 import config from './config';
@@ -12,7 +11,7 @@ import { RedisService } from './services/redis.service';
 
 const app = express();
 
-// Güvenlik middleware'leri
+// Security middlewares
 app.use(helmet());
 app.use(cors({
   origin: config.corsOrigins,
@@ -20,29 +19,29 @@ app.use(cors({
 }));
 app.use(rateLimiter);
 
-// Body parsing middleware'leri
+// Body parsing middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Veritabanı servislerini başlat ve global değişkenlere ata
+// Initialize database services and assign to global variables
 global.mongoDBService = MongoDBService.getInstance();
 global.redisService = RedisService.getInstance();
 
-// Bakım modu kontrolü
+// Maintenance mode check
 app.use('/api', checkMaintenance);
 
-// API rotaları
+// API routes
 app.use('/api', routes);
 
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    error: 'İstenen endpoint bulunamadı',
+    error: 'Endpoint not found',
   });
 });
 
-// Hata yönetimi
+// Error handling
 app.use(errorHandler);
 
 export default app; 

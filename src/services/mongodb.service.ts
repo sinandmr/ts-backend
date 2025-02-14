@@ -5,7 +5,7 @@ import config from '../config';
 export class MongoDBService {
   private static instance: MongoDBService;
 
-  private constructor() {}
+  private constructor() { }
 
   public static getInstance(): MongoDBService {
     if (!MongoDBService.instance) {
@@ -17,9 +17,9 @@ export class MongoDBService {
   public async connect(): Promise<void> {
     try {
       await mongoose.connect(config.mongoUri);
-      console.log('✅ MongoDB bağlantısı başarılı');
+      console.log('✅ MongoDB connection successful');
     } catch (error) {
-      console.error('❌ MongoDB bağlantı hatası:', error);
+      console.error('❌ MongoDB connection error:', error);
       throw error;
     }
   }
@@ -27,9 +27,9 @@ export class MongoDBService {
   public async disconnect(): Promise<void> {
     try {
       await mongoose.disconnect();
-      console.log('MongoDB bağlantısı kapatıldı');
+      console.log('MongoDB connection closed');
     } catch (error) {
-      console.error('MongoDB bağlantısı kapatılırken hata oluştu:', error);
+      console.error('Error closing MongoDB connection:', error);
       throw error;
     }
   }

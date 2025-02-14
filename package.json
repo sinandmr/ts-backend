@@ -1,7 +1,7 @@
 {
-  "name": "ts-backend",
+  "name": "modern-express-ts-boilerplate",
   "version": "1.0",
-  "description": "Modern, güvenli ve ölçeklenebilir TypeScript tabanlı backend",
+  "description": "Modern, secure and scalable TypeScript-based backend boilerplate",
   "main": "src/index.ts",
   "scripts": {
     "lint": "eslint . --ext .ts",
