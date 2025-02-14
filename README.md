@@ -126,3 +126,59 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - And all other open source libraries used in this project
 
 A modern and secure Express.js backend template ready for production, featuring a scalable and maintainable architecture.
+
+## Docker Support
+
+### Development
+
+```bash
+# Start the development environment
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop the environment
+docker-compose down
+```
+
+### Production
+
+```bash
+# Build production image
+docker build -t modern-express-ts .
+
+# Run production container
+docker run -d -p 3000:3000 --name api modern-express-ts
+```
+
+### Docker Features
+
+- Multi-stage builds for optimal image size
+- Development and production Dockerfiles
+- Docker Compose for local development
+- Health checks for all services
+- Volume mapping for hot reload
+- Non-root user for security
+- Container orchestration ready
+
+## CI/CD with Jenkins
+
+The project includes a complete Jenkins pipeline configuration with the following stages:
+
+1. **Checkout**: Clone the repository
+2. **Install**: Install dependencies
+3. **Lint**: Run code quality checks
+4. **Test**: Execute test suite
+5. **Build**: Compile TypeScript code
+6. **Docker Build**: Create Docker image
+7. **Docker Push**: Push to registry (main branch only)
+8. **Deploy**: Automatic deployment to development/production
+
+### Jenkins Setup
+
+1. Create a new Pipeline job in Jenkins
+2. Configure GitHub/GitLab webhook
+3. Add Docker Hub credentials in Jenkins
+4. Set up environment variables if needed
+5. The pipeline will automatically run on push
