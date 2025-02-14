@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ESNext",
+    /* Modules */
+    "module": "commonjs",
+    "rootDir": "./",
+    "baseUrl": "./",
+    "typeRoots": ["./src/types/", "./global.d.ts"],
+    "allowUmdGlobalAccess": true,
+    "resolveJsonModule": true,
+    /* JavaScript Support */
+    "allowJs": true,
+    /* Emit */
+    "sourceMap": true,
+    "outDir": "dist",
+    /* Interop Constraints */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    /* Type Checking */
+    "strict": true,
+    "noImplicitAny": false,
+    /* Completeness */
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "global.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}
